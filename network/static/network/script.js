@@ -16,8 +16,6 @@ function edit(id) {
 
           document.querySelector(`#post-${id}`).innerHTML = edit_box.value;
     });
-
-    edit_box.value = " ";
 }
 
 function like(id) {
