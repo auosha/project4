@@ -1,0 +1,17 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+     <div class="form-control">
+        <h6>New Post</h6>
+        <form id="new-post-form" action="{% url 'index' %}" method="post">
+            {% csrf_token %}
+            <textarea class="form-control mb-2" id="new-post-text" name="post" placeholder="Write your post here"></textarea>
+            <input type="submit" class="btn btn-primary" id="new-post-send" value="publish"/>
+        </form>
+    </div>
+{%endif%}
+{% endblock %}
+
+

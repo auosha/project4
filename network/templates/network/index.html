@@ -1,0 +1,61 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'network/script.js' %}"></script>
+{% endblock %}
+
+<div class="col-3 text-center p-2">
+            <h4 class="blog-header-logo text-dark" >All Posts</h4>
+          </div>
+    <div>
+        {% for post in page_object %}
+            <div class="border p-3 mt-3 container">
+                <div class="pricing-header mx-auto text-right">
+                 <h4><a href="{% url 'profile' post.user.id %}" style="color:#113f67">{{ post.user }}</a></h4></div>
+<div class="pricing-header mx-auto text-center" style="position:relative;top:34px">
+      <p class="lead"><div id="post-{{post.id}}">{{ post.post }}</div></p>
+    </div>
+                {% if post.user.id == user.id %}
+                  <div id="edit" class="row align-items-center" onclick="edit('{{ post.id }}')" style="cursor:pointer;position:relative;top:-30px">
+                    <div class="col"></div>
+                    <div class="col-auto">
+                      <a href="#" class="btn btn-primary">
+                        Edit
+                      </a>
+                    </div>
+                  </div>
+
+                {% else %}
+                {% endif %}
+                <textarea class="form-control mb-2" id="edit-box-{{post.id}}" name="edit-box" style="display:none;"></textarea>
+                <button id="edit-btn-{{post.id}}" class="btn btn-primary" style="display:none;position:relative;top:-30px">Save</button>
+
+                <button class="btn mr-1 far fa-heart" style="background-color:white; border:none;border-radius:100px" id="like-btn-{{post.id}}" onclick="like('{{ post.id }}')"></button>
+                <div id="like-count-{{post.id}}" class="d-inline-block">{{ post.likes }}</div>
+
+                <div style="position:relative;top:-70px">{{ post.date }}</div>
+            </div>
+        {% empty %}
+        <div>No Post <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <desc>Download more icon variants from https://tabler-icons.io/i/browser-off</desc>
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M8 4h11a1 1 0 0 1 1 1v11m-.288 3.702a0.997 .997 0 0 1 -.712 .298h-14a1 1 0 0 1 -1 -1v-14c0 -.276 .112 -.526 .293 -.707"></path>
+   <path d="M4 8h4m4 0h8"></path>
+   <path d="M3 3l18 18"></path>
+</svg></div>
+        {% endfor %}
+    </div>
+
+
+    {% if page_object.has_next %}
+        <a href="?page={{ page_object.next_page_number }}"class="btn btn-primary">next</a>
+    {% endif %}
+    {% if page_object.has_previous %}
+        <a href="?page={{ page_object.previous_page_number }}" class="btn btn-primary">previous</a>
+    {% endif %}
+
+</div>
+{% endblock %}
